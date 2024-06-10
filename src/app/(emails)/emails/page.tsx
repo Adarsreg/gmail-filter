@@ -8,7 +8,7 @@ import { getServerSession } from 'next-auth'
 
 
 const page = async ({ }) => {
-
+   
     return (<h1></h1>)
 }
 

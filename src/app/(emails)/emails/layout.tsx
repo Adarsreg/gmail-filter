@@ -5,9 +5,9 @@ import { authOptions } from '@/lib/auth';
 import { notFound } from 'next/navigation';
 //import { useState } from 'react';
 import SignOutButton from '@/components/SignOutButton';
-
 const Layout = async ({ children }: { children: React.ReactNode }) => {
     const session = await getServerSession(authOptions);
+    //console.log(session)
     if (!session) notFound();
 
     //const [emailCount, setEmailCount] = useState(15);
