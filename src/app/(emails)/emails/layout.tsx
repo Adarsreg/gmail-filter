@@ -5,12 +5,13 @@ import { authOptions } from '@/lib/auth';
 import { notFound } from 'next/navigation';
 //import { useState } from 'react';
 import SignOutButton from '@/components/SignOutButton';
+import fetchEmails from '@/components/fetchEmails';
 const Layout = async ({ children }: { children: React.ReactNode }) => {
     const session = await getServerSession(authOptions);
-    //console.log(session)
-    if (!session) notFound();
 
-    //const [emailCount, setEmailCount] = useState(15);
+    if (!session) notFound();
+    const access_token= session.user.sessToken;
+    const emails = await fetchEmails(access_token);
 
     return (<div className="flex h-screen w-full items-center justify-center bg-gray-900">
         <div className="w-full max-w-2xl bg-gray-800 p-6 rounded-lg shadow-lg">
