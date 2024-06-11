@@ -10,7 +10,7 @@ const fetchEmails = async (sessionToken: string| undefined) => {
                 'Accept': 'application/json'
             },
         });
-        console.log("Response from gmail api", response)
+        
         if (!response.ok) {
             throw new Error('Failed to fetch emails');
         }
