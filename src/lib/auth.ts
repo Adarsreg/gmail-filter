@@ -31,6 +31,11 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: getGoogleCredentials().clientId,
       clientSecret: getGoogleCredentials().clientSecret,
+      authorization: {
+        params: {
+          scope: "openid https://www.googleapis.com/auth/gmail.readonly",
+        },
+      },
     }),
   ],
   callbacks: {
