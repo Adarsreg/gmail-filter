@@ -7,12 +7,22 @@ import { notFound } from 'next/navigation';
 import SignOutButton from '@/components/SignOutButton';
 import fetchEmails from '@/components/fetchEmails';
 
+
 const Layout = async ({ children }: { children: React.ReactNode }) => {
     const session = await getServerSession(authOptions);
 
     if (!session) notFound();
     const access_token = session.user.sessToken;
     const emails = await fetchEmails(access_token);
+
+    // Sort emails to make unread emails come first
+    emails.sort((a, b) => {
+        const aUnread = a.labelIds.includes('UNREAD');
+        const bUnread = b.labelIds.includes('UNREAD');
+        if (aUnread && !bUnread) return -1;
+        if (!aUnread && bUnread) return 1;
+        return 0;
+    });
 
     return (
         <div className="flex h-screen w-full items-center justify-center bg-gray-900">
@@ -83,3 +93,4 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
 };
 
 export default Layout;
+
