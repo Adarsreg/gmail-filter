@@ -1,10 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Email Classifier
 
-## Getting Started
+This project aims to enhance the email management experience by enabling users to connect to their Gmail accounts and filter out spam or unwanted emails from their inboxes. The project leverages OpenAI's API to classify emails into the following categories:
 
-First, run the development server:
+- Important: Emails that are personal or work-related and require immediate attention.
+- Promotions: Emails related to sales, discounts, and marketing campaigns.
+- Social: Emails from social networks, friends, and family.
+- Marketing: Emails related to marketing, newsletters, and notifications.
+- Spam: Unwanted or unsolicited emails.
+- General: Emails that do not fit into any of the above categories.
 
-```bash
+### Features
+
+- Gmail Integration: Seamlessly connect to your Gmail account using auth.js
+- AI-Powered Classification: Utilize OpenAI's API to categorize emails.
+- Effortless Email Management: Easily remove unwanted emails after classification.
+
+### Steps to Getting the Code Running
+
+The email classifier is built using Next.js. To get your development environment up and running, follow these steps:
+
+### Prerequisites
+
+Ensure you have Node.js and npm installed. If not, you can download and install them from [Node.js](https://nodejs.org/).
+
+### Installation
+
+Clone the repository:
+
+```
+git clone https://github.com/Adarsreg/email-classifier.git
+cd email-classifier
+```
+
+Install the dependencies:
+
+```
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+### Running the Development Server
+
+Start the development server:
+
+```
 npm run dev
 # or
 yarn dev
@@ -14,23 +58,10 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Learn More
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [Gmail API](https://developers.google.com/gmail/api/reference/rest/v1/users.messages/list)
+- [Learn Next.js](https://nextjs.org/learn)
+- [Next.js GitHub Repository](https://github.com/vercel/next.js/)
