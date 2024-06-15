@@ -40,6 +40,9 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user, account }) {
+      // console.log("jwt token", token);
+      // console.log("jwt user", user);
+      // console.log("jwt account", account);
       if (account) {
         const accesstok = JSON.parse(
           JSON.stringify(account.access_token)
