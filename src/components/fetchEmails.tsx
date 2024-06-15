@@ -1,9 +1,9 @@
 
-const fetchEmails = async (sessionToken: string| undefined ) => {
+const fetchEmails = async (sessionToken: string| undefined , count: number=10) => {
 
     //console.log("Access token to be sent", sessionToken)
     try {
-        const response = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=10', {
+        const response = await fetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=${count}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${sessionToken}`,
