@@ -33,13 +33,14 @@ export const authOptions: NextAuthOptions = {
       clientSecret: getGoogleCredentials().clientSecret,
       authorization: {
         params: {
-          scope: "openid https://mail.google.com/",
+          scope: "openid email profile https://mail.google.com/",
         },
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user, account }) {
+      //debug statements
       // console.log("jwt token", token);
       // console.log("jwt user", user);
       // console.log("jwt account", account);
@@ -61,13 +62,12 @@ export const authOptions: NextAuthOptions = {
         return token;
       }
       const dbUser = JSON.parse(dbUserResult);
-
       return {
-        ...token,
         id: dbUser.id,
         name: dbUser.name,
         email: dbUser.email,
         picture: dbUser.image,
+        sessToken: token.sessToken,
       };
     },
     async session({ session, token }) {
