@@ -4,7 +4,8 @@ import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import Image from "next/image"
 import { notFound } from "next/navigation";
-
+import Button from "@/components/ui/button";
+import Selection from "@/components/selection";
 const Layout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getServerSession(authOptions);
   if (!session) notFound();
@@ -44,15 +45,10 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <select className="bg-gray-700 text-gray-300 rounded-lg px-3 py-2 hover:bg-gray-600 transition-colors">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
-                <option value="20">20</option>
-              </select>
-              <button className="bg-indigo-500 hover:bg-indigo-400 text-white rounded-lg px-5 py-2 transition-colors">
-                Classify
-              </button>
+              <Selection />
+              <Button variant="custom" size="lg">
+  Classify
+</Button>
               <SignOutButton className="h-full aspect-square" />
             </div>
           </div>
