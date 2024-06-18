@@ -44,6 +44,13 @@ pnpm install
 bun install
 ```
 
+### Important Notes before getting started (mainly env related)
+
+- UPSTASH_REDIS_URL and UPSTASH_REDIS_TOKEN are to be retrived from your newly created database at [upstash.com](https://upstash.com/) .This ensures that the account details are safely stored in your \_own\* database.
+- Setup [Google OAUTH consent from ](https://console.cloud.google.com/) and retrieve GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in the .env for gmail api interaction. Also turn on API and Services for gmail.
+- Also set NEXT_PUBLIC_API_BASE_URL as http://localhost:3000.
+- Lastly, add NEXTAUTH_SECRET in the .env. The NEXTAUTH_SECRET is a secret key used by NextAuth.js for encryption, ensuring that tokens, cookies, and other data are securely transmitted.
+
 ### Running the Development Server
 
 Start the development server:
@@ -58,7 +65,7 @@ pnpm dev
 bun dev
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+Open http://localhost:3000 with your browser to see the result. It prints "Hello world"
 Open http://localhost:3000/login manually to login, as the middleware is not set yet.
 
 ### Learn More
