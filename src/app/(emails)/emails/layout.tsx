@@ -6,12 +6,28 @@ import Image from "next/image"
 import { notFound } from "next/navigation";
 import Button from "@/components/ui/button";
 import Selection from "@/components/selection";
+
+async function fetchEmailLimit() {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/limit`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+  if (!response.ok) {
+    throw new Error('Failed to fetch the email limit');
+  }
+  const data = await response.json();
+  return data.limit;
+}
+
 const Layout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getServerSession(authOptions);
   if (!session) notFound();
   const access_token = session.user.sessToken;
-  const emails = await fetchEmails(access_token);
+  const finals = await fetchEmails(access_token);
 
+  const emails = finals.slice(0,await fetchEmailLimit());
   //Sort emails to make unread emails come first
   emails.sort((a, b) => {
       const aUnread = a.labelIds.includes('UNREAD');

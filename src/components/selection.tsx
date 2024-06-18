@@ -4,9 +4,28 @@ import React, { useState } from 'react';
 const Selection = () => {
   const [selectedValue, setSelectedValue] = useState('5'); // Initialize with default value
 
-  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleSelectChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     console.log(e.target.value); // Log selected value
     setSelectedValue(e.target.value); // Update selected value
+
+    try {
+      const response = await fetch('/api/limit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ limit: e.target.value }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      console.log('Server response:', data); // Log the server response
+    } catch (error) {
+      console.error('There was a problem with the fetch operation:', error);
+    }
   };
 
   return (
