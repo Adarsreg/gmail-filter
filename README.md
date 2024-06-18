@@ -50,6 +50,7 @@ bun install
 - Setup [Google OAUTH consent from ](https://console.cloud.google.com/) and retrieve GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in the .env for gmail api interaction. Also turn on API and Services for gmail.
 - Also set NEXT_PUBLIC_API_BASE_URL as http://localhost:3000.
 - Lastly, add NEXTAUTH_SECRET in the .env. The NEXTAUTH_SECRET is a secret key used by NextAuth.js for encryption, ensuring that tokens, cookies, and other data are securely transmitted.
+- You can raise a PR (describing the issue) to either main or test1 branch. The test1 branch will eventually be merged with the main.
 
 ### Running the Development Server
 
@@ -65,8 +66,9 @@ pnpm dev
 bun dev
 ```
 
-Open http://localhost:3000 with your browser to see the result. It prints "Hello world"
-Open http://localhost:3000/login manually to login, as the middleware is not set yet.
+- Open http://localhost:3000 with your browser to see the result. It prints "Hello world".
+
+- Open http://localhost:3000/login manually to login, as the middleware is not set yet.
 
 ### Learn More
 
