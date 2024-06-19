@@ -1,18 +1,33 @@
 "use client"
 
-//set up for toast notifications
-import { FC, ReactNode } from 'react'
-import {  Toaster } from 'react-hot-toast'
+import { FC, ReactNode, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
+import { createContext, useContext } from 'react';
+
+// Create EmailLimitContext
+export const EmailLimitContext = createContext({
+  limit: 5, // Default limit
+  setLimit: (limit: number) => {} // Default setter
+});
+
+// Custom hook to use the EmailLimitContext
+export const useEmailLimit = () => useContext(EmailLimitContext);
 
 interface ProvidersProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
-const Providers: FC<ProvidersProps> = ({children}) => {
-  return <>
-  <Toaster position='top-center' reverseOrder= {false} />
-  {children}
-  </>
-}
+const Providers: FC<ProvidersProps> = ({ children }) => {
+  const [limit, setLimit] = useState(5); // Default limit
 
-export default Providers
+  return (
+    <>
+      <Toaster position='top-center' reverseOrder={false} />
+      <EmailLimitContext.Provider value={{ limit, setLimit }}>
+        {children}
+      </EmailLimitContext.Provider>
+    </>
+  );
+};
+
+export default Providers;
