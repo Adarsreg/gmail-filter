@@ -38,3 +38,4 @@ next-env.d.ts
 .env*.local
 node_modules
 .env
+explanation.txt

@@ -7,23 +7,12 @@ import { notFound } from "next/navigation";
 import Button from "@/components/ui/button";
 import Selection from "@/components/selection";
 import EmailList from "@/components/emailList";
-import fetchEmailLimit from "@/helpers/fetchlimit";
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getServerSession(authOptions);
   if (!session) notFound();
   const access_token = session.user.sessToken;
   const finals = await fetchEmails(access_token);
-
-  const emails = finals.slice(0,await fetchEmailLimit());
-  //Sort emails to make unread emails come first
-  emails.sort((a, b) => {
-      const aUnread = a.labelIds.includes('UNREAD');
-      const bUnread = b.labelIds.includes('UNREAD');
-      if (aUnread && !bUnread) return -1;
-      if (!aUnread && bUnread) return 1;
-      return 0;
-  });
 
   return (
       <div className="flex h-screen w-full items-center justify-center bg-gray-900 text-gray-100">
@@ -56,7 +45,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
               <SignOutButton className="h-full aspect-square" />
             </div>
           </div>
-          <EmailList emails={emails} />
+          <EmailList mails={finals} />
         </div>
       </div>
     );

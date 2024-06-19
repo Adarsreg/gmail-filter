@@ -14,3 +14,5 @@ export default async function fetchEmailLimit() {
   const data = await response.json();
   return data.limit;
 }
+
+//not yet used in the project, but it is a helper function to fetch the email limit from the server, mainly to test the API

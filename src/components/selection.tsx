@@ -1,13 +1,21 @@
+// Selection.tsx
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useEmailLimit } from './Providers'; 
 
 const Selection = () => {
-  const [selectedValue, setSelectedValue] = useState('5'); // Initialize with default value
+  const { limit, setLimit } = useEmailLimit(); // Use the context hook to get and set the limit
+  const [selectedValue, setSelectedValue] = useState(limit.toString()); // Initialize with the context's default value
 
-  
+  useEffect(() => {
+    // Update the selected value when the context's limit changes
+    setSelectedValue(limit.toString());
+  }, [limit]);
+
   const handleSelectChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log(e.target.value); // Log selected value
-    setSelectedValue(e.target.value); // Update selected value
+    const newLimit = e.target.value;
+    console.log(newLimit); 
+    setSelectedValue(newLimit); // Update selected value
 
     try {
       const response = await fetch('/api/limit', {
@@ -15,7 +23,7 @@ const Selection = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ limit: e.target.value }),
+        body: JSON.stringify({ limit: newLimit }),
       });
 
       if (!response.ok) {
@@ -24,6 +32,9 @@ const Selection = () => {
 
       const data = await response.json();
       console.log('Server response:', data); // Log the server response
+
+      // Update the context's limit
+      setLimit(Number(newLimit));
     } catch (error) {
       console.error('There was a problem with the fetch operation:', error);
     }
