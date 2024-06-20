@@ -70,12 +70,13 @@ bun dev
 
 - Open http://localhost:3000/login manually to login, as the middleware is not set yet.
 
+### Preview
+
+![Login](https://lh3.googleusercontent.com/d/1c9xCKd6vLJIYkAnfndcqg-acWQjlxo0a)
+![GmailFilter](https://lh3.googleusercontent.com/d/1iWzaOEzbXjw4z-36GzV5zY7_yq_PFAlo)
+
 ### Learn More
 
 - [Gmail API](https://developers.google.com/gmail/api/reference/rest/v1/users.messages/list)
 - [Learn Next.js](https://nextjs.org/learn)
 - [Next.js GitHub Repository](https://github.com/vercel/next.js/)
-
-### Preview
-
-![EmailClassifier](https://lh3.googleusercontent.com/d/119ANkZTEPtf4HEeFz5hDuyzRE_JweLoC)
