@@ -10,7 +10,7 @@ const openai = new OpenAI({
 
 export const runtime = "edge";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
     console.log("Received messages:", messages);
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 
     for (const message of messages) {
       const response = await openai.chat.completions.create({
-        model: "gpt-4-turbo",
+        model: "gpt-3.5-turbo",
         messages: [
           {
             role: "system",

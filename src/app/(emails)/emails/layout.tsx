@@ -4,9 +4,9 @@ import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import Image from "next/image"
 import { notFound } from "next/navigation";
-import Button from "@/components/ui/button";
 import Selection from "@/components/selection";
 import EmailList from "@/components/emailList";
+import ClassifyButton from "@/components/ClassifyButton";
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getServerSession(authOptions);
@@ -39,9 +39,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
           </div>
           <div className="flex items-center gap-3">
             <Selection />
-            <Button variant="custom" size="lg" className="bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-md transition-transform transform hover:scale-105 active:scale-95">
-              Classify
-            </Button>
+            <ClassifyButton mails={finals} />
             <SignOutButton className="h-full aspect-square" />
           </div>
         </div>
