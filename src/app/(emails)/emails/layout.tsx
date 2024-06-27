@@ -13,6 +13,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
   if (!session) notFound();
   const access_token = session.user.sessToken;
   const finals = await fetchEmails(access_token);
+  console.log("finals", finals)
 
   return (
     <div className="flex h-screen w-full items-center justify-center bg-gradient-to-r from-blue-600 to-purple-700 text-gray-100 font-sans">
