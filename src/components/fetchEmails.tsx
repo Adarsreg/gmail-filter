@@ -16,7 +16,7 @@ const fetchEmails = async (sessionToken: string| undefined , count: number=10) =
         }
         
         const emails = await response.json();
-        //console.log(emails)
+        console.log("1st response",emails)
 
         // Fetch detailed information for each email
         const emailDetails = await Promise.all(
@@ -39,8 +39,34 @@ const fetchEmails = async (sessionToken: string| undefined , count: number=10) =
         
         //console.log("Email further...",emailDetails);
 
-        return emailDetails;
+        // const fullEmails = emailDetails.map(email => {
+        //     const payload = email.payload;
+        //     const parts = payload.parts;
+        //     let emailBody = '';
 
+        //     if(parts){
+        //         parts.forEach(part =>{
+        //             if (part.mimeType === 'text/plain' || part.mimeType === 'text/html') {
+        //                 const bodyData = part.body.data;
+        //                 if (bodyData) {
+        //                     emailBody += atob(bodyData.replace(/-/g, '+').replace(/_/g, '/'));
+        //                 }
+        //             }
+        //         });
+        //     } else{
+        //         const bodyData = payload.body.data;
+        //         if (bodyData) {
+        //             emailBody = atob(bodyData.replace(/-/g, '+').replace(/_/g, '/'));
+        //         }
+        //     }
+        //     return {
+        //         ...email,
+        //         body: emailBody
+        //     };
+        // })
+        // return fullEmails;
+
+        return emailDetails;
     } catch (error) {
         console.error('Error fetching emails:', error);
         throw error;
