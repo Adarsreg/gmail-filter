@@ -26,6 +26,14 @@ body {
     rgb(var(--background-start-rgb));
 }
 
+/* Ensuring proper font support for all symbols */
+body, iframe {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgb(var(--foreground-rgb));
+}
+
 /* Scrollbar styles for light mode */
 @media (prefers-color-scheme: light) {
   /* For Firefox */
