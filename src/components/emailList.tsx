@@ -40,7 +40,7 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
           const filteredLabels = email.labelIds.filter((label: string) => label === 'INBOX');
 
           return (
-            <li key={email.id} onClick={() => handleEmailClick(email.id)} className={`p-4 rounded-lg shadow-md ${isUnread ? 'bg-blue-500' : 'bg-gray-700'} hover:bg-gray-600 transition-colors text-white`}>
+            <li key={email.id} onClick={() => handleEmailClick(email.id)} className={`p-4 rounded-lg shadow-md ${isUnread ? 'bg-blue-500' : 'bg-gray-700'} hover:bg-gray-600 transition-colors text-white cursor-pointer`}>
               <div className="flex justify-between items-center mb-2">
                 <span className={`font-semibold ${isUnread ? 'text-yellow-300' : 'text-gray-300'}`}>
                   {isUnread ? 'Unread' : 'Read'}
