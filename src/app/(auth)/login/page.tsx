@@ -72,7 +72,7 @@ const Page: FC = () => {
           className="flex justify-center items-center w-full py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg shadow-md transition-transform transform hover:scale-105 active:scale-95"
         >
           <KeyIcon className="h-5 w-5 mr-2" />
-          Open OpenAI API Key
+          Enter Gemini API Key
         </button>
 
         <Transition appear show={isTrayOpen} as={Fragment}>
