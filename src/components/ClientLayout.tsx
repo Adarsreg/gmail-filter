@@ -14,7 +14,7 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ emails, children }) => {
 
   return (
     <div className={`flex flex-grow overflow-hidden ${selectedEmailId ? '' : 'justify-center items-center'}`}>
-      <div className={`${selectedEmailId ? 'w-1/3' : 'w-full'} overflow-auto`}>
+      <div className={`${selectedEmailId ? 'w-1/3' : 'w-full'} overflow-auto h-full`}>
         <EmailList mails={emails} />
       </div>
       {selectedEmailId && (
