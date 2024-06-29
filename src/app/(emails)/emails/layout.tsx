@@ -5,9 +5,9 @@ import { getServerSession } from "next-auth";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import Selection from "@/components/selection";
-import EmailList from "@/components/emailList";
 import ClassifyButton from "@/components/ClassifyButton";
 import Providers from "@/components/Providers"; // Import Providers
+import ClientLayout from "@/components/ClientLayout"; // Import ClientLayout
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getServerSession(authOptions);
@@ -45,14 +45,10 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
               <SignOutButton className="h-full aspect-square" />
             </div>
           </div>
-          <div className="flex flex-grow overflow-hidden">
-            <div className="w-1/3 overflow-auto">
-              <EmailList mails={finals} />
-            </div>
-            <div className="w-2/3 p-4 overflow-auto max-h-full">
-              {children}
-            </div>
-          </div>
+          
+          <ClientLayout emails={finals}>
+            {children}
+          </ClientLayout>
         </div>
       </div>
     </Providers>

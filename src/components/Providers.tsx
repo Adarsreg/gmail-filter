@@ -14,21 +14,31 @@ type EmailsContextType = {
   setEmails: Dispatch<SetStateAction<any[]>>;
 };
 
-// Create EmailLimitContext
+type SelectedEmailContextType = {
+  selectedEmailId: string | null;
+  setSelectedEmailId: Dispatch<SetStateAction<string | null>>;
+};
+
+// Create contexts
 export const EmailLimitContext = createContext<EmailLimitContextType>({
   limit: 5,
   setLimit: () => {}
 });
 
-// Create EmailsContext
 export const EmailsContext = createContext<EmailsContextType>({
   emails: [],
   setEmails: () => {}
 });
 
+export const SelectedEmailContext = createContext<SelectedEmailContextType>({
+  selectedEmailId: null,
+  setSelectedEmailId: () => {}
+});
+
 // Custom hooks to use the contexts
 export const useEmailLimit = () => useContext(EmailLimitContext);
 export const useEmails = () => useContext(EmailsContext);
+export const useSelectedEmail = () => useContext(SelectedEmailContext);
 
 interface ProvidersProps {
   children: ReactNode;
@@ -37,13 +47,16 @@ interface ProvidersProps {
 const Providers: FC<ProvidersProps> = ({ children }) => {
   const [limit, setLimit] = useState<number>(5); // Default limit
   const [emails, setEmails] = useState<any[]>([]); // Default emails array
+  const [selectedEmailId, setSelectedEmailId] = useState<string | null>(null); // Track the selected email
 
   return (
     <>
       <Toaster position='top-center' reverseOrder={false} />
       <EmailLimitContext.Provider value={{ limit, setLimit }}>
         <EmailsContext.Provider value={{ emails, setEmails }}>
-          {children}
+          <SelectedEmailContext.Provider value={{ selectedEmailId, setSelectedEmailId }}>
+            {children}
+          </SelectedEmailContext.Provider>
         </EmailsContext.Provider>
       </EmailLimitContext.Provider>
     </>

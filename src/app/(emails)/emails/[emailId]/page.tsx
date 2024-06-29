@@ -1,13 +1,20 @@
+// EmailPage.tsx
 "use client";
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import { useEmails } from '@/components/Providers';
+import { useEmails, useSelectedEmail } from '@/components/Providers';
 import EmailDetail from './EmailDetail';
 
-const EmailPage = () => {
+const EmailPage: React.FC = () => {
   const params = useParams();
   const emailId = params?.emailId as string;
   const { emails } = useEmails();
+  const { setSelectedEmailId } = useSelectedEmail(); // Use the context
+
+  // Update the selected email state
+  useEffect(() => {
+    setSelectedEmailId(emailId || null);
+  }, [emailId, setSelectedEmailId]);
 
   if (!params || !emailId || !emails || emails.length === 0) {
     return (
