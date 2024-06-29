@@ -15,7 +15,7 @@ const HomeButton: React.FC = () => {
 
   return (
     <Button
-    className='transition-transform transform hover:scale-105 '
+    className='transition-transform transform hover:scale-105 select-none '
       onClick={handleHomeClick}
         variant="custom"
     >

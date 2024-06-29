@@ -40,7 +40,7 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 select-none">
             <Selection />
               <HomeButton />
               <ClassifyButton mails={finals} />

@@ -16,7 +16,7 @@ const ClassifyButton: React.FC<ClassifyButtonProps> = ({ mails }) => {
        // Hook up the classify button
       variant="custom" 
       size="default" 
-      className="  transition-transform transform hover:scale-105 "
+      className="  transition-transform transform hover:scale-105 select-none"
     >
       Classify
     </Button>
