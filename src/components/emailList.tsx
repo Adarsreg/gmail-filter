@@ -1,6 +1,5 @@
-"use client";
 import React, { useContext, useEffect, useState } from 'react';
-import { EmailLimitContext, useEmails } from './Providers';
+import { EmailLimitContext, useEmails, useSelectedEmail } from './Providers';
 import { useRouter } from 'next/navigation';
 
 type EmailListProps = {
@@ -8,9 +7,10 @@ type EmailListProps = {
 };
 
 const EmailList: React.FC<EmailListProps> = ({ mails }) => {
-  const { limit } = useContext(EmailLimitContext); 
-  const { emails, setEmails } = useEmails(); 
-  const [filteredEmails, setFilteredEmails] = useState(() => mails.slice(0, limit)); 
+  const { limit } = useContext(EmailLimitContext);
+  const { emails, setEmails } = useEmails();
+  const { setSelectedEmailId } = useSelectedEmail(); // Use the context
+  const [filteredEmails, setFilteredEmails] = useState(() => mails.slice(0, limit));
   const router = useRouter();
 
   useEffect(() => {
@@ -28,6 +28,7 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
   }, [mails, setEmails]);
 
   const handleEmailClick = (id: string) => {
+    setSelectedEmailId(id); // Update the selected email ID
     router.push(`/emails/${id}`);
   };
 

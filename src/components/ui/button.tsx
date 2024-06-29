@@ -6,7 +6,7 @@ import { ButtonHTMLAttributes, FC } from 'react'
 //creating a resuable button using cva
 
 const buttonVariants = cva(
-    'active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-color focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none',
+    'active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-color focus:outline-none focus:ring-2  focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none',
     {
         variants: {
             variant: {
