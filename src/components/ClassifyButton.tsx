@@ -8,15 +8,37 @@ type ClassifyButtonProps = {
 };
 
 const ClassifyButton: React.FC<ClassifyButtonProps> = ({ mails }) => {
+  const handleClassifyClick = async () => {
+    try {
+      
+      const response = await fetch("/api/gemini", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(mails), 
+      });
 
-   
- 
+      if (response.ok) {
+        console.log("Emails sent for classification successfully.");
+        const data = await response.json();
+        console.log("Response from server:", data);
+      } else {
+        console.error("Error sending emails. Status code:", response.status);
+        const errorData = await response.json();
+        console.error("Error message:", errorData);
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  };
+
   return (
-    <Button 
-       // Hook up the classify button
-      variant="custom" 
-      size="default" 
-      className="  transition-transform transform hover:scale-105 select-none"
+    <Button
+      variant="custom"
+      size="default"
+      className="transition-transform transform hover:scale-105 select-none"
+      onClick={handleClassifyClick} 
     >
       Classify
     </Button>

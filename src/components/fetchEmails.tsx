@@ -1,5 +1,5 @@
 
-const fetchEmails = async (sessionToken: string| undefined , count: number=10) => {
+const fetchEmails = async (sessionToken: string| undefined , count: number=5) => {
 
     //console.log("Access token to be sent", sessionToken)
     try {
@@ -16,7 +16,7 @@ const fetchEmails = async (sessionToken: string| undefined , count: number=10) =
         }
         
         const emails = await response.json();
-        console.log("1st response",emails)
+        //console.log("1st response",emails)
 
         // Fetch detailed information for each email
         const emailDetails = await Promise.all(
@@ -28,15 +28,15 @@ const fetchEmails = async (sessionToken: string| undefined , count: number=10) =
                         'Accept': 'application/json'
                     },
                 });
-
+                
                 if (!emailResponse.ok) {
                     throw new Error(`Failed to fetch email with ID: ${message.id}`);
                 }
-
+                
                 return await emailResponse.json();
             })
         );
-        
+        console.log("Email Details",emailDetails)
         return emailDetails;
     } catch (error) {
         console.error('Error fetching emails:', error);
