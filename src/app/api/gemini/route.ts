@@ -3,6 +3,7 @@
 
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { json } from "stream/consumers";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
@@ -12,19 +13,28 @@ const model = genAI.getGenerativeModel({
 
 export async function POST(request: Request) {
   const emails = await request.json();
-  const emailsText = JSON.stringify(emails);
-
+  console.log("Emails being sent to api1111111.....", emails);
+  const emailsnippets = emails.map((email: { id: any; snippet: any }) => {
+    return {
+      id: email.id,
+      snippet: email.snippet,
+    };
+  });
+  console.log("EmailSnippets", emailsnippets);
   try {
-    const prompt = `# Classify the following emails\n\n${emailsText}\n into Spam or Important or Promotions or Social or Marketing, Return a json with id and label for each email in an array`;
+    const prompt = `I want you to classify my emails precisely Important or Promotions or Social or Marketing(Emails related to marketing, newsletters, and notifications) or
+     Spam(Unwanted or unsolicited emails) or General(Emails that do not fit into any of the above categories) based on their snippet property and return an array of jsons with 
+     its respective "id" as a key and "classification" as another key whilst behaving like an api,do not reply in english
+    : ${JSON.stringify(emailsnippets)} `;
+    console.log("Prompt", prompt);
 
     const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const rawresponse = response.text();
-    console.log("Raw Response", rawresponse);
-    //const cleanresponse = rawresponse.replace(/```json\n|\n```/g, "").trim();
-    // const parsedResponse = JSON.parse(cleanresponse);
-    // console.log("Parsed Response", parsedResponse);
-    return NextResponse.json(response.text());
+    const resp = await result.response.text();
+
+    const jsonResponse = JSON.parse(resp);
+
+    console.log("Response from gemini api", jsonResponse);
+    return NextResponse.json(jsonResponse);
   } catch (error) {
     return NextResponse.json({ error: (error as Error).message });
   }

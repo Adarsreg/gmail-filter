@@ -10,7 +10,7 @@ type ClassifyButtonProps = {
 const ClassifyButton: React.FC<ClassifyButtonProps> = ({ mails }) => {
   const handleClassifyClick = async () => {
     try {
-      
+      //console.log("ClassifyButton received", mails);
       const response = await fetch("/api/gemini", {
         method: "POST",
         headers: {

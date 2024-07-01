@@ -1,3 +1,4 @@
+"use client"
 import React, { useContext, useEffect, useState } from 'react';
 import { EmailLimitContext, useEmails, useSelectedEmail } from './Providers';
 import { useRouter } from 'next/navigation';

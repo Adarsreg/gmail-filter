@@ -36,7 +36,7 @@ const fetchEmails = async (sessionToken: string| undefined , count: number=5) =>
                 return await emailResponse.json();
             })
         );
-        console.log("Email Details",emailDetails)
+        // console.log("Email Details",emailDetails)
         return emailDetails;
     } catch (error) {
         console.error('Error fetching emails:', error);
