@@ -56,9 +56,9 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
       <EmailLimitContext.Provider value={{ limit, setLimit }}>
         <EmailsContext.Provider value={{ emails, setEmails }}>
           <SelectedEmailContext.Provider value={{ selectedEmailId, setSelectedEmailId }}>
-          <ClassifiedEmailsProvider>
+          
             {children}
-          </ClassifiedEmailsProvider>
+          
           </SelectedEmailContext.Provider>
         </EmailsContext.Provider>
       </EmailLimitContext.Provider>
