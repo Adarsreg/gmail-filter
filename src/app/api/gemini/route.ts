@@ -22,7 +22,7 @@ export async function POST(request: Request) {
   });
   console.log("EmailSnippets", emailsnippets);
   try {
-    const prompt = `I want you to classify my emails precisely Important or Promotions or Social or Marketing(Emails related to marketing, newsletters, and notifications) or
+    const prompt = `I want you to classify my emails precisely Important(emails related to account security or shipping related or more) or Promotions(Mainly promotional emails) or Social(common mails from social media sites like Quora or Facebook or any social media) or Marketing(Emails related to marketing, newsletters, and notifications) or
      Spam(Unwanted or unsolicited emails) or General(Emails that do not fit into any of the above categories) based on their snippet property and return an array of jsons with 
      its respective "id" as a key and "classification" as another key whilst behaving like an api,do not reply in english
     : ${JSON.stringify(emailsnippets)} `;

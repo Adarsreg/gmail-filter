@@ -1,35 +1,38 @@
-// components/ClassifyButton.tsx
 "use client";
-import React from 'react';
 import Button from "@/components/ui/button";
+import { useClassifiedEmails } from './ClassifiedEmailsContext';
+import { useState } from "react";
 
 type ClassifyButtonProps = {
   mails: any[];
 };
 
 const ClassifyButton: React.FC<ClassifyButtonProps> = ({ mails }) => {
+  const {setClassifiedEmails}= useClassifiedEmails();
+  const [loading, setLoading] = useState(false);
   const handleClassifyClick = async () => {
+    setLoading(true);
     try {
-      //console.log("ClassifyButton received", mails);
       const response = await fetch("/api/gemini", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(mails), 
+        body: JSON.stringify(mails),
       });
 
       if (response.ok) {
-        console.log("Emails sent for classification successfully.");
         const data = await response.json();
+        setClassifiedEmails(data);
         console.log("Response from server:", data);
       } else {
-        console.error("Error sending emails. Status code:", response.status);
         const errorData = await response.json();
         console.error("Error message:", errorData);
       }
     } catch (error) {
       console.error("An error occurred:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -40,7 +43,7 @@ const ClassifyButton: React.FC<ClassifyButtonProps> = ({ mails }) => {
       className="transition-transform transform hover:scale-105 select-none"
       onClick={handleClassifyClick} 
     >
-      Classify
+      {loading ? 'Classifying...' : 'Classify'}
     </Button>
   );
 };
