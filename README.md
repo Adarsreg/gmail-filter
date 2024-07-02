@@ -1,4 +1,4 @@
-# Email Classifier
+# Mail Filter
 
 This project aims to enhance the email management experience by enabling users to connect to their Gmail accounts and filter out spam or unwanted emails from their inboxes. The project leverages OpenAI's API to classify emails into the following categories:
 
@@ -12,7 +12,7 @@ This project aims to enhance the email management experience by enabling users t
 ### Features
 
 - Gmail Integration: Seamlessly connect to your Gmail account using auth.js
-- AI-Powered Classification: Utilize OpenAI's API to categorize emails.
+- AI-Powered Classification: Utilize Gemini's API to categorize emails.
 - Effortless Email Management: Easily remove unwanted emails after classification.
 
 ### Steps to Getting the Code Running
