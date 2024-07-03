@@ -1,6 +1,6 @@
 # Mail Filter
 
-This project aims to enhance the email management experience by enabling users to connect to their Gmail accounts and filter out spam or unwanted emails from their inboxes. The project leverages OpenAI's API to classify emails into the following categories:
+This project aims to enhance the email management experience by enabling users to connect to their Gmail accounts and filter out spam or unwanted emails from their inboxes. The project leverages Gemini's API to classify emails into the following categories:
 
 - Important: Emails that are personal or work-related and require immediate attention.
 - Promotions: Emails related to sales, discounts, and marketing campaigns.
