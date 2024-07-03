@@ -103,7 +103,7 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
     <div className="flex flex-col h-full">
       {!selectedEmailId && (
         <div className="flex justify-between items-center space-x-2 mb-4">
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 select-none">
             {['Important', 'Promotions', 'Social', 'Spam', 'General', 'Marketing'].map(classification => (
               <Button
                 variant="custom"
@@ -121,7 +121,7 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
             size="default"
             onClick={handleDelete}
             disabled={selectedEmails.length === 0}
-            className="px-4 py-2 rounded-lg  text-white transition-all duration-300 focus:ring-0 focus:ring-offset-0"
+            className="px-4 py-2 rounded-lg  text-white transition-all duration-300 focus:ring-0 focus:ring-offset-0 select-none"
           >
             Delete
           </Button>
