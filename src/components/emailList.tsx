@@ -4,17 +4,19 @@ import { EmailLimitContext, useEmails, useSelectedEmail } from './Providers';
 import { useRouter } from 'next/navigation';
 import { useClassifiedEmails } from './ClassifiedEmailsContext';
 import Button from './ui/button';
+
 type EmailListProps = {
   mails: any[];
 };
 
 const EmailList: React.FC<EmailListProps> = ({ mails }) => {
   const { limit } = useContext(EmailLimitContext);
-  const { emails, setEmails } = useEmails();
-  const { selectedEmailId, setSelectedEmailId } = useSelectedEmail(); // Use the context
+  const { setEmails } = useEmails();
+  const { selectedEmailId, setSelectedEmailId } = useSelectedEmail();
   const { classifiedEmails } = useClassifiedEmails();
   const [filteredEmails, setFilteredEmails] = useState(() => mails.slice(0, limit));
   const [selectedClassification, setSelectedClassification] = useState<string | null>(null);
+  const [selectedEmails, setSelectedEmails] = useState<string[]>([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -36,11 +38,19 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
 
   const handleEmailClick = (id: string) => {
     if (selectedEmailId === id) {
-      setSelectedEmailId(null); // Deselect if already selected
+      setSelectedEmailId(null); // Deselect the email
     } else {
-      setSelectedEmailId(id); // Update the selected email ID
+      setSelectedEmailId(id); //update the selected email
       router.push(`/emails/${id}`);
     }
+  };
+
+  const handleEmailSelect = (id: string) => {
+    setSelectedEmails(prevSelectedEmails =>
+      prevSelectedEmails.includes(id)
+        ? prevSelectedEmails.filter(emailId => emailId !== id)
+        : [...prevSelectedEmails, id]
+    );
   };
 
   const getClassification = (emailId: string) => {
@@ -50,23 +60,28 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
 
   const handleClassificationClick = (classification: string) => {
     if (selectedClassification === classification) {
-      setSelectedClassification(null); // Deselect if already selected
+      setSelectedClassification(null); //deselect if already selected
+      setSelectedEmails([]);
     } else {
-      setSelectedClassification(classification); // Select classification
+      setSelectedClassification(classification); 
+      const emailsToSelect = filteredEmails
+        .filter(email => getClassification(email.id) === classification)
+        .map(email => email.id);
+      setSelectedEmails(emailsToSelect);
     }
   };
 
   return (
     <div className="flex flex-col h-full">
       {!selectedEmailId && (
-        <div className="flex justify-start space-x-2 mb-4 ">
-          {['Important', 'Promotions', 'Social', 'Spam', 'General'].map(classification => (
+        <div className="flex justify-start space-x-2 mb-4">
+          {['Important', 'Promotions', 'Social', 'Spam', 'General', 'Marketing'].map(classification => (
             <Button
-            variant="custom"
-      size="default"
+              variant="custom"
+              size="default"
               key={classification}
               onClick={() => handleClassificationClick(classification)}
-              className={`px-4 py-2 rounded-lg ${selectedClassification === classification ? 'bg-indigo-600 text-black' : ' text-white'} transition-all duration-300 focus:ring-0  focus:ring-offset-0`}
+              className={`px-4 py-2 rounded-lg ${selectedClassification === classification ? 'bg-indigo-600 text-black' : 'text-white'} transition-all duration-300 focus:ring-0 focus:ring-offset-0`}
             >
               {classification}
             </Button>
@@ -80,12 +95,16 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
             const isInInbox = email.labelIds.includes('INBOX');
             const filteredLabels = email.labelIds.filter((label: string) => label === 'INBOX');
             const classification = getClassification(email.id);
+            const isSelected = selectedEmails.includes(email.id);
 
             return (
               <li
                 key={email.id}
-                onClick={() => handleEmailClick(email.id)}
-                className={`p-4 rounded-lg shadow-md ${selectedEmailId === email.id ? 'border-2 border-indigo-500' : ''} ${isUnread ? 'bg-blue-500' : 'bg-gray-700'} hover:bg-gray-600 transition-colors text-white cursor-pointer`}
+                className={`relative p-4 rounded-lg shadow-md ${
+                  isSelected ? 'bg-gray-600' : isUnread ? 'bg-blue-500' : 'bg-gray-700'
+                } ${
+                  selectedEmailId === email.id ? 'border-2 border-indigo-500' : ''
+                } hover:bg-gray-600 transition-colors text-white cursor-pointer flex flex-col`}
               >
                 <div className="flex justify-between items-center mb-2">
                   <span className={`font-semibold ${isUnread ? 'text-yellow-300' : 'text-gray-300'}`}>
@@ -97,7 +116,7 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
                     </span>
                   )}
                 </div>
-                <div className="mt-2 text-sm">
+                <div className="mt-2 text-sm flex-1" onClick={() => handleEmailClick(email.id)}>
                   {email.snippet}
                 </div>
                 {classification !== 'Unclassified' && (
@@ -105,6 +124,14 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
                     Classification: {classification}
                   </span>
                 )}
+                <div className="mt-2 flex justify-end">
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => handleEmailSelect(email.id)}
+                    className="accent-indigo-500 absolute bottom-2 right-2"
+                  />
+                </div>
               </li>
             );
           })}

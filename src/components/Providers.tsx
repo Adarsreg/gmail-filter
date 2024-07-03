@@ -2,7 +2,6 @@
 
 import { FC, ReactNode, useState, createContext, useContext, Dispatch, SetStateAction } from 'react';
 import { Toaster } from 'react-hot-toast';
-import { ClassifiedEmailsProvider } from './ClassifiedEmailsContext';
 
 // Type definitions
 type EmailLimitContextType = {
@@ -54,8 +53,8 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
     <>
       <Toaster position='top-center' reverseOrder={false} />
       <EmailLimitContext.Provider value={{ limit, setLimit }}>
-        <EmailsContext.Provider value={{ emails, setEmails }}>
-          <SelectedEmailContext.Provider value={{ selectedEmailId, setSelectedEmailId }}>
+        <EmailsContext.Provider value={{ emails, setEmails }}> 
+          <SelectedEmailContext.Provider value={{ selectedEmailId, setSelectedEmailId }}>  
           
             {children}
           
