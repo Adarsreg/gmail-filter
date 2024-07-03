@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useContext, useEffect, useState } from 'react';
 import { EmailLimitContext, useEmails, useSelectedEmail } from './Providers';
 import { useRouter } from 'next/navigation';
@@ -71,7 +71,7 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
     }
   };
 
-  const handleDelete = async () => {
+  const handleDeleteSelected = async () => {
     if (selectedEmails.length === 0) return;
 
     try {
@@ -80,30 +80,28 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ emails: selectedEmails }),
+        body: JSON.stringify({ ids: selectedEmails }),
       });
 
       if (response.ok) {
-        // Assuming the API returns the IDs of deleted emails or some success message.
-        const result = await response.json();
-        // Remove deleted emails from the list
-        const updatedEmails = emails.filter(email => !selectedEmails.includes(email.id));
-        setEmails(updatedEmails);
-        setFilteredEmails(updatedEmails.slice(0, limit));
+        // Handle successful delete
+        const remainingEmails = filteredEmails.filter(email => !selectedEmails.includes(email.id));
+        setFilteredEmails(remainingEmails);
         setSelectedEmails([]);
       } else {
+        // Handle error
         console.error('Failed to delete emails');
       }
     } catch (error) {
-      console.error('An error occurred while deleting emails:', error);
+      console.error('Error deleting emails:', error);
     }
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full ">
       {!selectedEmailId && (
-        <div className="flex justify-between items-center space-x-2 mb-4">
-          <div className="flex space-x-2 select-none">
+        <div className="flex flex-wrap justify-between items-center mb-4 gap-2 ">
+          <div className="flex flex-wrap space-x-2 gap-2 ">
             {['Important', 'Promotions', 'Social', 'Spam', 'General', 'Marketing'].map(classification => (
               <Button
                 variant="custom"
@@ -119,11 +117,10 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
           <Button
             variant="delete"
             size="default"
-            onClick={handleDelete}
-            disabled={selectedEmails.length === 0}
-            className="px-4 py-2 rounded-lg  text-white transition-all duration-300 focus:ring-0 focus:ring-offset-0 select-none"
+            onClick={handleDeleteSelected}
+            className="px-4 py-2 rounded-lg bg-red-500 text-white transition-all duration-300 hover:bg-red-700 focus:ring-0 focus:ring-offset-0"
           >
-            Delete
+            Delete 
           </Button>
         </div>
       )}
@@ -140,10 +137,10 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
               <li
                 key={email.id}
                 className={`relative p-4 rounded-lg shadow-md ${
-                  isSelected ? 'bg-gray-600' : isUnread ? 'bg-blue-500' : 'bg-gray-700'
+                  isSelected ? 'bg-gray-700' : isUnread ? 'bg-blue-500' : 'bg-gray-600'
                 } ${
                   selectedEmailId === email.id ? 'border-2 border-indigo-500' : ''
-                } hover:bg-gray-600 transition-colors text-white cursor-pointer flex flex-col`}
+                } hover:bg-gray-700 transition-colors text-white cursor-pointer flex flex-col`}
               >
                 <div className="flex justify-between items-center mb-2">
                   <span className={`font-semibold ${isUnread ? 'text-yellow-300' : 'text-gray-300'}`}>

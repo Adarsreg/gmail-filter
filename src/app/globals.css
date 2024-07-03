@@ -3,91 +3,41 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 29, 37, 40;
+  --background-end-rgb: 41, 50, 60;
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-/* Ensuring proper font support for all symbols */
-body, iframe {
+  background: rgb(18, 18, 18);
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 14px;
   line-height: 1.5;
-  color: rgb(var(--foreground-rgb));
-}
-
-/* Scrollbar styles for light mode */
-@media (prefers-color-scheme: light) {
-  /* For Firefox */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(var(--foreground-rgb), 0.5) rgba(var(--background-start-rgb), 0.5);
-  }
-
-  /* For Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 12px;
-  }
-
-  *::-webkit-scrollbar-track {
-    background: rgba(var(--background-start-rgb), 0.5);
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: rgba(var(--foreground-rgb), 0.5);
-    border-radius: 10px;
-    border: 3px solid rgba(var(--background-start-rgb), 0.5);
-  }
-
-  *::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(var(--foreground-rgb), 0.7);
-  }
 }
 
 /* Scrollbar styles for dark mode */
-@media (prefers-color-scheme: dark) {
-  /* For Firefox */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: rgba(var(--foreground-rgb), 0.5) rgba(var(--background-end-rgb), 0.5);
-  }
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--foreground-rgb), 0.5) rgba(var(--background-end-rgb), 0.5);
+}
 
-  /* For Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 12px;
-  }
+*::-webkit-scrollbar {
+  width: 12px;
+}
 
-  *::-webkit-scrollbar-track {
-    background: rgba(var(--background-end-rgb), 0.5);
-  }
+*::-webkit-scrollbar-track {
+  background: rgba(var(--background-end-rgb), 0.5);
+}
 
-  *::-webkit-scrollbar-thumb {
-    background-color: rgba(var(--foreground-rgb), 0.5);
-    border-radius: 10px;
-    border: 3px solid rgba(var(--background-end-rgb), 0.5);
-  }
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(var(--foreground-rgb), 0.5);
+  border-radius: 10px;
+  border: 3px solid rgba(var(--background-end-rgb), 0.5);
+}
 
-  *::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(var(--foreground-rgb), 0.7);
-  }
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(var(--foreground-rgb), 0.7);
 }
 
 @layer utilities {
