@@ -36,7 +36,7 @@ const Page: FC = () => {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600 font-sans">
+    <div className="flex h-screen items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600 font-sans ">
       <motion.div
         className="max-w-md w-full p-8 mx-auto bg-white rounded-lg shadow-2xl"
         initial={{ opacity: 0, scale: 0.95 }}
@@ -44,9 +44,9 @@ const Page: FC = () => {
         transition={{ duration: 0.5, ease: 'easeOut' }}
       >
         <h1 className="text-4xl font-extrabold text-center text-gray-900 mb-6">Gmail Filter</h1>
-        <h2 className="text-center text-2xl font-semibold text-gray-700 mb-8">Login or Signup</h2>
+        <h2 className="text-center text-2xl font-semibold text-gray-700 mb-8">Login with Google</h2>
         <Button
-          isloading={isLoading}
+          isLoading={isLoading}
           type="button"
           className="flex justify-center items-center w-full py-3 mb-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-md transition-transform transform hover:scale-105 active:scale-95"
           onClick={loginWithGoogle}
