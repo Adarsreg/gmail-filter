@@ -11,7 +11,7 @@ type EmailListProps = {
 
 const EmailList: React.FC<EmailListProps> = ({ mails }) => {
   const { limit } = useContext(EmailLimitContext);
-  const { setEmails } = useEmails();
+  const { emails, setEmails } = useEmails();
   const { selectedEmailId, setSelectedEmailId } = useSelectedEmail();
   const { classifiedEmails } = useClassifiedEmails();
   const [filteredEmails, setFilteredEmails] = useState(() => mails.slice(0, limit));
@@ -38,9 +38,9 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
 
   const handleEmailClick = (id: string) => {
     if (selectedEmailId === id) {
-      setSelectedEmailId(null); // Deselect the email
+      setSelectedEmailId(null);
     } else {
-      setSelectedEmailId(id); //update the selected email
+      setSelectedEmailId(id);
       router.push(`/emails/${id}`);
     }
   };
@@ -60,10 +60,10 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
 
   const handleClassificationClick = (classification: string) => {
     if (selectedClassification === classification) {
-      setSelectedClassification(null); //deselect if already selected
+      setSelectedClassification(null);
       setSelectedEmails([]);
     } else {
-      setSelectedClassification(classification); 
+      setSelectedClassification(classification);
       const emailsToSelect = filteredEmails
         .filter(email => getClassification(email.id) === classification)
         .map(email => email.id);
@@ -71,21 +71,60 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
     }
   };
 
+  const handleDelete = async () => {
+    if (selectedEmails.length === 0) return;
+
+    try {
+      const response = await fetch('/api/delete', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ emails: selectedEmails }),
+      });
+
+      if (response.ok) {
+        // Assuming the API returns the IDs of deleted emails or some success message.
+        const result = await response.json();
+        // Remove deleted emails from the list
+        const updatedEmails = emails.filter(email => !selectedEmails.includes(email.id));
+        setEmails(updatedEmails);
+        setFilteredEmails(updatedEmails.slice(0, limit));
+        setSelectedEmails([]);
+      } else {
+        console.error('Failed to delete emails');
+      }
+    } catch (error) {
+      console.error('An error occurred while deleting emails:', error);
+    }
+  };
+
   return (
     <div className="flex flex-col h-full">
       {!selectedEmailId && (
-        <div className="flex justify-start space-x-2 mb-4">
-          {['Important', 'Promotions', 'Social', 'Spam', 'General', 'Marketing'].map(classification => (
-            <Button
-              variant="custom"
-              size="default"
-              key={classification}
-              onClick={() => handleClassificationClick(classification)}
-              className={`px-4 py-2 rounded-lg ${selectedClassification === classification ? 'bg-indigo-600 text-black' : 'text-white'} transition-all duration-300 focus:ring-0 focus:ring-offset-0`}
-            >
-              {classification}
-            </Button>
-          ))}
+        <div className="flex justify-between items-center space-x-2 mb-4">
+          <div className="flex space-x-2">
+            {['Important', 'Promotions', 'Social', 'Spam', 'General', 'Marketing'].map(classification => (
+              <Button
+                variant="custom"
+                size="default"
+                key={classification}
+                onClick={() => handleClassificationClick(classification)}
+                className={`px-4 py-2 rounded-lg ${selectedClassification === classification ? 'bg-indigo-600 text-black' : 'text-white'} transition-all duration-300 focus:ring-0 focus:ring-offset-0`}
+              >
+                {classification}
+              </Button>
+            ))}
+          </div>
+          <Button
+            variant="delete"
+            size="default"
+            onClick={handleDelete}
+            disabled={selectedEmails.length === 0}
+            className="px-4 py-2 rounded-lg  text-white transition-all duration-300 focus:ring-0 focus:ring-offset-0"
+          >
+            Delete
+          </Button>
         </div>
       )}
       <nav className="flex flex-1 flex-col overflow-auto">
