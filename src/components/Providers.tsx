@@ -46,8 +46,8 @@ interface ProvidersProps {
 
 const Providers: FC<ProvidersProps> = ({ children }) => {
   const [limit, setLimit] = useState<number>(5); // Default limit
-  const [emails, setEmails] = useState<any[]>([]); // Default emails array
-  const [selectedEmailId, setSelectedEmailId] = useState<string | null>(null); // Track the selected email
+  const [emails, setEmails] = useState<any[]>([]); // Default emails array updated by the email list
+  const [selectedEmailId, setSelectedEmailId] = useState<string | null>(null); // Track the selected email either present or not
 
   return (
     <>
