@@ -1,5 +1,6 @@
-// EmailPage.tsx
 "use client";
+//   /email/[emailid] page is rendered when the user clicks on an email from the email list
+// detailed view of the email is displayed
 import React, { useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { useEmails, useSelectedEmail } from '@/components/Providers';

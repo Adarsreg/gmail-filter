@@ -5,8 +5,8 @@ import { toast } from 'react-hot-toast';
 import { signIn } from 'next-auth/react';
 import { Dialog, Transition, TransitionChild, DialogPanel, DialogTitle } from '@headlessui/react';
 import { motion } from 'framer-motion';
-import { KeyIcon } from '@heroicons/react/24/solid'; // Updated icon
-import Button from '@/components/ui/button'; // Assuming you have a custom Button component
+import { KeyIcon } from '@heroicons/react/24/solid'; 
+import Button from '@/components/ui/button'; 
 
 const Page: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
