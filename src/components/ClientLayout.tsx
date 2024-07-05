@@ -10,6 +10,7 @@ type ClientLayoutProps = {
 const ClientLayout: React.FC<ClientLayoutProps> = ({ emails, children }) => {
   const { selectedEmailId } = useSelectedEmail();
 
+  //depicts conditional rendering, if selectedEmailId is present, then the email list and the email content will be displayed side by side
   return (
     <div className={`flex flex-col md:flex-row flex-grow overflow-hidden ${selectedEmailId ? '' : 'justify-center items-center'}`}>
       <div className={`${selectedEmailId ? 'w-full md:w-1/3' : 'w-full'} overflow-auto h-full p-4 bg-gray-900 rounded-lg`}>

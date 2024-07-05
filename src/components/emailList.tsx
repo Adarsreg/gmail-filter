@@ -31,7 +31,8 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
     });
     setFilteredEmails(updatedEmails);
   }, [mails, limit, selectedClassification]);
-
+  
+  // email list is updated whenever mails 'prop' changes
   useEffect(() => {
     setEmails(mails);
   }, [mails, setEmails]);
