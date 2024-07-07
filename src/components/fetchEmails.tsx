@@ -1,5 +1,5 @@
 
-const fetchEmails = async (sessionToken: string| undefined , count: number=5) => {
+const fetchEmails = async (sessionToken: string| undefined , count: number=20) => {
 
     //console.log("Access token to be sent", sessionToken)
     try {

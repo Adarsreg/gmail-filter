@@ -1,3 +1,4 @@
+//detailed view of an email decode logic
 import React, { useEffect, useRef } from 'react';
 
 type EmailDetailProps = {
