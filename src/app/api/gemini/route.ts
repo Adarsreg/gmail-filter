@@ -13,7 +13,6 @@ const model = genAI.getGenerativeModel({
 
 export async function POST(request: Request) {
   const emails = await request.json();
-  console.log("Emails being sent to api1111111.....", emails);
   const emailsnippets = emails.map((email: { id: any; snippet: any }) => {
     return {
       id: email.id,
