@@ -4,6 +4,7 @@ import { EmailLimitContext, useEmails, useSelectedEmail } from './Providers';
 import { useRouter } from 'next/navigation';
 import { useClassifiedEmails } from './ClassifiedEmailsContext';
 import Button from './ui/button';
+import toast from 'react-hot-toast';
 
 type EmailListProps = {
   mails: any[];
@@ -75,27 +76,70 @@ const EmailList: React.FC<EmailListProps> = ({ mails }) => {
   const handleDeleteSelected = async () => {
     if (selectedEmails.length === 0) return;
 
-    try {
-      const response = await fetch('/api/delete', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ids: selectedEmails }),
-      });
+    // Show a confirmation toast
+    toast((t) => (
+      <span className="text-gray-800">
+        Are you sure you want to delete your selected emails? This will delete them from Gmail.
+        <div className="flex space-x-2 mt-2">
+          <Button
+            variant="delete"
+            size="default"
+            onClick={async () => {
+              toast.dismiss(t.id);
+              // Perform the deletion
+              try {
+                const response = await fetch('/api/delete', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({ ids: selectedEmails }),
+                });
 
-      if (response.ok) {
-        // Handle successful delete
-        const remainingEmails = filteredEmails.filter(email => !selectedEmails.includes(email.id));
-        setFilteredEmails(remainingEmails);
-        setSelectedEmails([]);
-      } else {
-        // Handle error
-        console.error('Failed to delete emails');
-      }
-    } catch (error) {
-      console.error('Error deleting emails:', error);
-    }
+                if (response.ok) {
+                  // Handle successful delete
+                  const remainingEmails = filteredEmails.filter(email => !selectedEmails.includes(email.id));
+                  setFilteredEmails(remainingEmails);
+                  setSelectedEmails([]);
+                  toast.success('Emails deleted successfully');
+                } else {
+                  // Handle error
+                  console.error('Failed to delete emails');
+                  toast.error('Failed to delete emails');
+                }
+              } catch (error) {
+                console.error('Error deleting emails:', error);
+                toast.error('Error deleting emails');
+              }
+            }}
+            className="px-4 py-2 rounded-lg bg-red-500 text-white transition-all duration-300 hover:bg-red-700 focus:ring-0 focus:ring-offset-0"
+          >
+            Yes
+          </Button>
+          <Button
+            variant="delete"
+            size="default"
+            onClick={() => toast.dismiss(t.id)}
+            className="px-4 py-2 rounded-lg bg-gray-300 text-black transition-all duration-300 hover:bg-gray-400 focus:ring-0 focus:ring-offset-0"
+          >
+            No
+          </Button>
+        </div>
+      </span>
+    ), {
+      duration: Infinity, // Keep the toast open until the user responds
+      style: {
+        background: 'white',
+        color: 'black',
+        padding: '1rem',
+        borderRadius: '0.5rem',
+        boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+      },
+      iconTheme: {
+        primary: '#ff4d4f',
+        secondary: '#fff',
+      },
+    });
   };
 
   return (
