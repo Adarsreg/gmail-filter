@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     );
 
     if (gmailResponse.ok) {
-      console.log("Emails deleted successfully....");
+      console.log("Emails deleted successfully.");
       return NextResponse.json(
         { message: "Emails deleted successfully" },
         { status: 200 }

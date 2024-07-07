@@ -3,7 +3,6 @@
 
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { json } from "stream/consumers";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
 
@@ -13,7 +12,6 @@ const model = genAI.getGenerativeModel({
 
 export async function POST(request: Request) {
   const emails = await request.json();
-  console.log("Emails being sent to api1111111.....", emails);
   const emailsnippets = emails.map((email: { id: any; snippet: any }) => {
     return {
       id: email.id,
