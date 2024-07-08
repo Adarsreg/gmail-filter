@@ -72,8 +72,6 @@ bun dev
 
 ![Login](https://lh3.googleusercontent.com/d/1BK1-hzewcYjWQ7W4iPcyVr5djMgTILiz)
 
-![img1](https://lh3.googleusercontent.com/d/1iWzaOEzbXjw4z-36GzV5zY7_yq_PFAlo)
-
 ![img2](https://lh3.googleusercontent.com/d/1q7qX248vqAU_dBRAIuIgpC4n1cSMaLwS)
 
 ![img3](https://lh3.googleusercontent.com/d/1fl58w0LXde3Vl7sipWdh54p7VYoAwwX1)
