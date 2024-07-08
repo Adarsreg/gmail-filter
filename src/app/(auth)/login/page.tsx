@@ -36,9 +36,9 @@ const Page: FC = () => {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600 font-sans ">
+    <div className="flex h-screen items-center justify-center bg-gray-800 font-sans ">
       <motion.div
-        className="max-w-md w-full p-8 mx-auto bg-white rounded-lg shadow-2xl"
+        className="max-w-lg w-full p-8 mx-auto bg-slate-400 rounded-lg shadow-2xl"
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
@@ -101,15 +101,15 @@ const Page: FC = () => {
                 >
                   <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all">
                     <DialogTitle as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                      Enter OpenAI API Key
+                      Enter Gemini API Key
                     </DialogTitle>
                     <div className="mt-2">
                       <input
                         type="text"
                         value={apiKey}
                         onChange={(e) => setApiKey(e.target.value)}
-                        placeholder="Your OpenAI API Key"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Your Gemini API Key"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
                       />
                     </div>
 
