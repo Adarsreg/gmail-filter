@@ -11,7 +11,7 @@ const buttonVariants = cva(
         default: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
         ghost: 'bg-transparent text-blue-600 hover:text-blue-700 focus:ring-blue-500',
         delete: 'bg-red-200 text-white hover:bg-red-800 focus:ring-red-600',
-        custom: 'bg-gray-700 text-white hover:bg-gray-800 focus:ring-gray-600',
+        custom: 'bg-gray-700 text-white hover:bg-gray-800 focus:ring-gray-600 ',
       },
       size: {
         default: 'h-10 py-2 px-4',
