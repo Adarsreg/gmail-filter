@@ -38,7 +38,7 @@ const Page: FC = () => {
   return (
     <div className="flex h-screen items-center justify-center bg-gray-800 font-sans ">
       <motion.div
-        className="max-w-lg w-full p-8 mx-auto bg-slate-400 rounded-lg shadow-2xl"
+        className="max-w-lg w-full p-8 mx-auto bg-gray-200 rounded-lg shadow-2xl"
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, ease: 'easeOut' }}
