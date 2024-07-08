@@ -66,9 +66,7 @@ pnpm dev
 bun dev
 ```
 
-- Open http://localhost:3000 with your browser to see the result. It prints "Hello world".
-
-- Open http://localhost:3000/login manually to login, as the middleware is not set yet.
+- Open http://localhost:3000 with your browser
 
 ### Preview
 
