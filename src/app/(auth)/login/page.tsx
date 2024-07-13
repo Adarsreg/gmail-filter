@@ -25,15 +25,29 @@ const Page: FC = () => {
     }
   };
 
-  const handleApiKeySubmit = () => {
+  const handleApiKeySubmit = async () => {
     if (apiKey) {
-      toast.success('API Key saved successfully');
-      setIsTrayOpen(false);
-      //  API key logic here
-    } else {
-      toast.error('Please enter a valid API key');
+      try{
+        const response = await fetch('/api/save-key', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ apiKey })
+      });
+      if (response.ok) {
+        toast.success('API Key saved successfully');
+        setIsTrayOpen(false);
+      } else {
+        toast.error('Failed to save API Key');
+      }
+    } catch (error) {
+      toast.error('An error occurred while saving the API Key');
     }
-  };
+  } else {
+    toast.error('Please enter a valid API key');
+  }
+};
 
   return (
     <div className="flex h-screen items-center justify-center bg-gray-800 font-sans ">
