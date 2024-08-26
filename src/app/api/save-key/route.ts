@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { db } from "@/lib/db";
-import { fetchRedis } from "@/helpers/redis";
 import { authOptions } from "@/lib/auth";
-const bcrypt = require("bcrypt");
+
 interface SaveKeyRequest {
   apiKey: string;
 }
@@ -26,12 +25,11 @@ export async function POST(request: Request) {
       );
     }
 
-    // Trim and hash the API key before saving
+    // Trim the API key before saving
     const trimmedKey = apiKey.trim();
-    const hashedKey = await bcrypt.hash(trimmedKey, 10);
 
-    // Store the hashed API key in Upstash Redis with user ID
-    await db.set(`user:${session.user.id}:apiKey`, hashedKey);
+    // Store the API key in Upstash Redis with user ID
+    await db.set(`user:${session.user.id}:apiKey`, trimmedKey);
 
     return NextResponse.json(
       { message: "API key saved successfully" },
