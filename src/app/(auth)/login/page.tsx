@@ -7,6 +7,7 @@ import { Dialog, Transition, TransitionChild, DialogPanel, DialogTitle } from '@
 import { motion } from 'framer-motion';
 import { KeyIcon } from '@heroicons/react/24/solid'; 
 import Button from '@/components/ui/button'; 
+import SaveApiKeyButton from '@/components/ui/SaveApiKeyButton';
 
 const Page: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -81,74 +82,6 @@ const Page: FC = () => {
           )}
           Google
         </Button>
-        <button
-          onClick={() => setIsTrayOpen(true)}
-          className="flex justify-center items-center w-full py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg shadow-md transition-transform transform hover:scale-105 active:scale-95"
-        >
-          <KeyIcon className="h-5 w-5 mr-2" />
-          Enter Gemini API Key
-        </button>
-
-        <Transition appear show={isTrayOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={() => setIsTrayOpen(false)}>
-            <TransitionChild
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
-              <div className="fixed inset-0 bg-black bg-opacity-50 transition-opacity" />
-            </TransitionChild>
-
-            <div className="fixed inset-0 z-10 overflow-y-auto">
-              <div className="flex min-h-full items-center justify-center p-4 text-center">
-                <TransitionChild
-                  enter="transform transition ease-in-out duration-300 sm:duration-700"
-                  enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                  enterTo="opacity-100 translate-y-0 sm:scale-100"
-                  leave="transform transition ease-in-out duration-300 sm:duration-700"
-                  leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                  leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                >
-                  <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-lg bg-white p-6 text-left align-middle shadow-xl transition-all">
-                    <DialogTitle as="h3" className="text-lg font-medium leading-6 text-gray-900">
-                      Enter Gemini API Key
-                    </DialogTitle>
-                    <div className="mt-2">
-                      <input
-                        type="text"
-                        value={apiKey}
-                        onChange={(e) => setApiKey(e.target.value)}
-                        placeholder="Your Gemini API Key"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-                      />
-                    </div>
-
-                    <div className="mt-4 flex justify-end">
-                      <button
-                        type="button"
-                        className="mr-2 inline-flex justify-center rounded-md border border-transparent bg-gray-300 px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2"
-                        onClick={() => setIsTrayOpen(false)}
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="button"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2"
-                        onClick={handleApiKeySubmit}
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </DialogPanel>
-                </TransitionChild>
-              </div>
-            </div>
-          </Dialog>
-        </Transition>
       </motion.div>
     </div>
   );

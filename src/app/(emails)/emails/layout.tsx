@@ -10,6 +10,7 @@ import Providers from "@/components/Providers";
 import ClientLayout from "@/components/ClientLayout";
 import HomeButton from "@/components/ui/homebutton";
 import { ClassifiedEmailsProvider } from "@/components/ClassifiedEmailsContext";
+import SaveApiKeyButton from "@/components/ui/SaveApiKeyButton";
 
 const Layout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getServerSession(authOptions);
@@ -43,9 +44,11 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-3">
+                <SaveApiKeyButton />
                 <Selection />
                 <HomeButton />
                 <ClassifyButton mails={finals} />
+                {/* <SaveApiKeyButton /> */}
                 <SignOutButton className="h-full aspect-square" />
               </div>
             </div>
