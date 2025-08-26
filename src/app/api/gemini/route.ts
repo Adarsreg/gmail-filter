@@ -1,54 +1,43 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-import { db } from "@/lib/db";
-import { authOptions } from "@/lib/auth";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 export async function POST(request: Request) {
   try {
-    const session = await getServerSession(authOptions);
-
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    // Retrieve the API key from Upstash Redis
-    const apiKey = await db.get(`user:${session.user.id}:apiKey`);
-
-    if (!apiKey) {
-      return NextResponse.json({ error: "API key not found" }, { status: 404 });
-    }
-
-    // Initialize Google Generative AI client with the retrieved API key
-    const genAI = new GoogleGenerativeAI(apiKey as string);
-
-    const model = genAI.getGenerativeModel({
-      model: "gemini-1.0-pro",
-    });
-
     const emails = await request.json();
-    const emailsnippets = emails.map((email: { id: any; snippet: any }) => {
-      return {
-        id: email.id,
-        snippet: email.snippet,
-      };
+    const emailSnippets = emails.map((e: any) => ({
+      id: e.id,
+      snippet: e.snippet,
+    }));
+
+    console.log("Email Snippets:", emailSnippets);
+
+    const promptText = `Classify each email snippet into one of the categories: Important (e.g., related to account security or shipping), Promotions (e.g., promotional offers), Social (e.g., social media updates), Marketing (e.g., newsletters, notifications), Spam (e.g., unsolicited messages), or General (everything else). Respond with a JSON array of objects, each with "id" and "classification" fields only—no explanation, just the raw JSON:\n${JSON.stringify(emailSnippets)}\n`;
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: promptText,
+      config: {
+        responseMimeType: "application/json",
+      },
     });
-    console.log("EmailSnippets", emailsnippets);
 
-    const prompt = `I want you to classify my emails precisely Important(emails related to account security or shipping related or more) or Promotions(Mainly promotional emails) or Social(common mails from social media sites like Quora or Facebook or any social media) or Marketing(Emails related to marketing, newsletters, and notifications) or Spam(Unwanted or unsolicited emails) or General(Emails that do not fit into any of the above categories) based on their snippet property and return an array of jsons with its respective "id" as a key and "classification" as another key whilst behaving like an api,do not reply in english : ${JSON.stringify(
-      emailsnippets
-    )} `;
-    console.log("Prompt", prompt);
+    const respText = response.text;
+    console.log("Gemini response:", respText);
 
-    const result = await model.generateContent(prompt);
-    const resp = await result.response.text();
+    let json;
+    try {
+      json = JSON.parse(respText);
+    } catch (parseErr) {
+      console.error("Failed to parse JSON:", parseErr, respText);
+      return NextResponse.json({ error: "Failed to parse Gemini API response as JSON." }, { status: 500 });
+    }
 
-    const jsonResponse = JSON.parse(resp);
-
-    console.log("Response from gemini api", jsonResponse);
-    return NextResponse.json(jsonResponse);
-  } catch (error) {
-    console.error("Error processing request:", error);
-    return NextResponse.json({ error: (error as Error).message });
+    console.log("Classification result:", json);
+    return NextResponse.json(json);
+  } catch (err) {
+    console.error("Error in /classify route:", err);
+    return NextResponse.json({ error: (err as Error).message }, { status: 500 });
   }
 }

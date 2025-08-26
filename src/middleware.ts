@@ -9,8 +9,17 @@ export default withAuth(
     // Check if the user is authenticated
     const isAuth = await getToken({ req });
 
-    // Identify if the current route is the login page
+    // Identify if the current route is the login or logout page
     const isLoginPage = pathname === "/login";
+    const isLogoutPage = pathname === "/logout";
+
+    // Handle logout functionality
+    if (isLogoutPage) {
+      const response = NextResponse.redirect(new URL("/login", req.url));
+      response.cookies.delete("next-auth.session-token"); // Clear session token
+      response.cookies.delete("next-auth.csrf-token"); // Clear CSRF token
+      return response;
+    }
 
     // Define the sensitive routes that require authentication
     const sensitiveRoutes = ["/emails"];
@@ -54,5 +63,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/", "/login", "/emails/:path*"], // Apply the middleware to these routes
+  matcher: ["/", "/login", "/logout", "/emails/:path*"], // Apply the middleware to these routes
 };
