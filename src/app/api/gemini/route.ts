@@ -1,3 +1,6 @@
+//endpoint that would receive the email and send it to gemini api for classification
+//this endpoint to be called by the button in the layout component
+
 import { NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
 
